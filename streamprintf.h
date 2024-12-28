@@ -150,7 +150,7 @@ protected:
 // wvsprintf() does not support that.
 
 template <>
-inline void Printf<char>::my_vsprintf(char* output, size_t width, const char* format, va_list vl)
+inline void Printf<char>::my_vsprintf(char* output, [[maybe_unused]] size_t width, const char* format, va_list vl)
 {
 	#if _MSC_VER >= 1400
 		vsprintf_s(output, width, format, vl);
