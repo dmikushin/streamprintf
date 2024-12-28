@@ -135,9 +135,9 @@ protected:
 	void my_vsprintf(CharT* output, size_t width, const CharT* format, va_list vl);
 	void OutputStaticText();
 
+	std::basic_ostream<CharT>& _ostm;	// stream to which we're outputting
 	const CharT* _fmt;		// the format string currently being processed
 	size_t _pos;			// current position with _fmt
-	std::basic_ostream<CharT>& _ostm;	// stream to which we're outputting
 };
 
 //-----------------------------------------------------------------------------
