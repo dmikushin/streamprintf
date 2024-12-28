@@ -44,8 +44,9 @@
 //      oprintf(cout, "%ld", i);
 //      oprintf(cout, "%d", l);
 
-// #define STREAMPRINTF_STRICT_INTSIZE
-
+#ifndef _MSC_VER
+    #define STREAMPRINTF_STRICT_INTSIZE
+#endif
 
 #include <assert.h>
 #include <stdarg.h>
@@ -97,12 +98,17 @@ public:
 	Printf& operator<<(short n)                { Do(PRINTF_TYPE(Short| Int), n); return *this; }
 	Printf& operator<<(int n)                  { Do(PRINTF_TYPE(None | Int), n); return *this; }
 	Printf& operator<<(long n)                 { Do(PRINTF_TYPE(Long | Int), n); return *this; }
-	Printf& operator<<(INT64 n)                { Do(PRINTF_TYPE(Int64| Int), n); return *this; }
+	
+	template<typename T>
+	typename std::enable_if<!std::is_same<long, INT64>::value && std::is_same<T, INT64>::value, Printf&>::type
+	operator<<(T n)                { Do(PRINTF_TYPE(Int64| Int), n); return *this; }
 
 	Printf& operator<<(unsigned short u)       { Do(PRINTF_TYPE(Short| Unsigned), u); return *this; }
 	Printf& operator<<(unsigned int u)         { Do(PRINTF_TYPE(None | Unsigned), u); return *this; }
 	Printf& operator<<(unsigned long u)        { Do(PRINTF_TYPE(Long | Unsigned), u); return *this; }
-	Printf& operator<<(UINT64 u)               { Do(PRINTF_TYPE(Int64| Unsigned), u); return *this; }
+	template<typename T>
+	typename std::enable_if<!std::is_same<unsigned long, UINT64>::value && std::is_same<T, UINT64>::value, Printf&>::type
+	operator<<(T u)               { Do(PRINTF_TYPE(Int64| Unsigned), u); return *this; }
 
 	Printf& operator<<(float f)                { Do(PRINTF_TYPE(None | Float), f); return *this; }
 	Printf& operator<<(double f)               { Do(PRINTF_TYPE(None | Float), f); return *this; }
