@@ -172,6 +172,7 @@ inline void Printf<wchar_t>::my_vsprintf(wchar_t* output, size_t width, const wc
 #endif
 
 //-----------------------------------------------------------------------------
+#pragma GCC diagnostic ignored "-Wstack-usage="
 template <class CharT>
 void Printf<CharT>::Do(int sizeAndType, ...)
 {
@@ -367,6 +368,7 @@ void Printf<CharT>::Do(int sizeAndType, ...)
 
 	OutputStaticText();
 }
+#pragma GCC diagnostic pop
 
 //-----------------------------------------------------------------------------
 template <class CharT>
