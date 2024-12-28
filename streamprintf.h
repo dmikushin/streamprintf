@@ -277,7 +277,7 @@ void Printf<CharT>::Do(int sizeAndType, ...)
 	else if (fmtChar == 'S')
 		fmtChar = 's';
 
-	assertmsg(i < sizeof(format) / sizeof(format[0]), "printf: Format specification is too long");
+	assertmsg(static_cast<size_t>(i) < sizeof(format) / sizeof(format[0]), "printf: Format specification is too long");
 	format[i] = '\0';
 
 #ifndef NDEBUG
